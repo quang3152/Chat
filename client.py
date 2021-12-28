@@ -50,7 +50,7 @@ class Client:
         self.send_button.config(font=("Arial", 12))
         self.send_button.pack(padx=20, pady=5)
 
-        self.send_button = tkinter.Button(self.win, text="Send", command=self.send_file)
+        self.send_button = tkinter.Button(self.win, text="Send File", command=self.send_file)
         self.send_button.config(font=("Arial", 12))
         self.send_button.pack(padx=20, pady=5)
 
