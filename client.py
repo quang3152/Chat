@@ -2,10 +2,10 @@ import socket
 import threading
 import tkinter
 import tkinter.scrolledtext
-from tkinter import simpledialog
+from tkinter import simpledialog, filedialog
 
 HOST = '127.0.0.1'
-PORT = 9090
+PORT = 9999
 
 
 class Client:
@@ -50,11 +50,19 @@ class Client:
         self.send_button.config(font=("Arial", 12))
         self.send_button.pack(padx=20, pady=5)
 
+        self.send_file_button = tkinter.Button(self.win, text="Send file", command=self.send_file)
+        self.send_file_button.config(font=("Arial", 12))
+        self.send_file_button.pack(padx=20, pady=5)
+
         self.gui_done = True
 
         self.win.protocol("WM_DELETE_WINDOW", self.stop)
 
         self.win.mainloop()
+
+    def send_file(self):
+        file_path = filedialog.askopenfilename()
+        print(file_path)
 
     def write(self):
         message = f"{self.nickname}: {self.input_area.get('1.0', 'end')}"

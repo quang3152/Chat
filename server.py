@@ -2,7 +2,7 @@ import socket
 import threading
 
 HOST = '127.0.0.1'
-PORT = 9090
+PORT = 9999
 
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind((HOST, PORT))
@@ -43,9 +43,9 @@ def receive():
         nicknames.append(nickname)
         clients.append(client)
 
-        print(f"Nickname of client is {nickname}")
-        broadcast(f"{nickname} connected to the server!\n".encode('utf-8'))
-        client.send("Connected to the server".encode('utf-8'))
+        print("Nickname of client is {}".format(nickname))
+        broadcast("{} connected to the server!\n".format(nickname).encode('utf-8'))
+        client.send("Connected to the server.\n".encode('utf-8'))
         thread = threading.Thread(target=handle, args=(client,))
         thread.start()
 
