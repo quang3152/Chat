@@ -8,6 +8,11 @@ HOST = '127.0.0.1'
 PORT = 9999
 
 
+def send_file():
+    file_path = filedialog.askopenfilename()
+    print(file_path)
+
+
 class Client:
 
     def __init__(self, host, port):
@@ -23,9 +28,12 @@ class Client:
 
         gui_thread = threading.Thread(target=self.gui_loop)
         receive_thread = threading.Thread(target=self.receive)
+        # file_thread = threading.Thread(target=self.file())
 
         gui_thread.start()
         receive_thread.start()
+        # file_thread.setDaemon(True)
+        # file_thread.start()
 
     def gui_loop(self):
         self.win = tkinter.Tk()
@@ -50,7 +58,7 @@ class Client:
         self.send_button.config(font=("Arial", 12))
         self.send_button.pack(padx=20, pady=5)
 
-        self.send_file_button = tkinter.Button(self.win, text="Send file", command=self.send_file)
+        self.send_file_button = tkinter.Button(self.win, text="Send file", command=self.file())
         self.send_file_button.config(font=("Arial", 12))
         self.send_file_button.pack(padx=20, pady=5)
 
@@ -60,9 +68,9 @@ class Client:
 
         self.win.mainloop()
 
-    def send_file(self):
-        file_path = filedialog.askopenfilename()
-        print(file_path)
+    def file(self):
+        file_thread = threading.Thread(target=send_file())
+        file_thread.setDaemon(True)
 
     def write(self):
         message = f"{self.nickname}: {self.input_area.get('1.0', 'end')}"
